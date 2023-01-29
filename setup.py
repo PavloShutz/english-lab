@@ -12,6 +12,7 @@ setup(
         'flask',
         'flask-login',
         'flask-sqlalchemy',
-        'flask-migrate'
+        'flask-migrate',
+        'python-dotenv'
     ]
 )
