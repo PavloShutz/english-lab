@@ -78,11 +78,13 @@
   * Flask-Login
   * Flask-SQLAlchemy
   * Flask-Migrate
+  * Flask-WTF
 * Фронтенд
   * HTML
   * Jinja2
   * Bootstrap5
   * JavaScript
+  * Bootstrap-Flask
 * Телеграм бот
   * Aiogram
 

@@ -13,6 +13,8 @@ setup(
         'flask-login',
         'flask-sqlalchemy',
         'flask-migrate',
+        'flask-wtf',
+        'bootstrap-flask',
         'python-dotenv'
     ]
 )
