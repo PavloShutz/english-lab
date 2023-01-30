@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     {% from 'bootstrap5/nav.html' import render_nav_item %}
+    {% from 'bootstrap5/utils.html' import render_messages, render_icon %}
+
     {% block styles %}
-        <!-- Bootstrap CSS -->
         {{ bootstrap.load_css() }}
     {% endblock %}
+
     {% if title %}
         <title>{% block title %} {{ title }} {% endblock %}</title>
     {% else %}
@@ -20,15 +22,22 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                {{ render_nav_item('auth.signup', 'Sign Up') }}
+            <div class="navbar-nav mr-auto" id="navbarSupportedContent">
+                {% if current_user.is_authenticated %}
+                    {{ render_nav_item('auth.logout', 'Log Out') }}
+                {% else %}
+                    {{ render_nav_item('auth.signup', 'Sign Up') }}
+                    {{ render_nav_item('auth.login', 'Log In') }}
+                {% endif %}
             </div>
         </div>
     </nav>
     {% block scripts %}
-        <!-- Optional JavaScript -->
         {{ bootstrap.load_js() }}
     {% endblock %}
+
+    {{ render_messages() }}
+
     {% block content %} {% endblock %}
 </body>
 </html>

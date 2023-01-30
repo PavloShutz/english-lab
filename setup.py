@@ -15,6 +15,7 @@ setup(
         'flask-migrate',
         'flask-wtf',
         'bootstrap-flask',
+        'email_validator',
         'python-dotenv'
     ]
 )
