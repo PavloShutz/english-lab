@@ -19,7 +19,7 @@ from .forms import SignUpForm, LoginForm
 auth = Blueprint(name='auth', import_name=__name__, url_prefix='/auth')
 
 
-@auth.route('/')
+@auth.get('/')
 def index() -> str:
     """Render main page."""
     return render_template("index.html")
@@ -34,7 +34,7 @@ def signup() -> Union[str, Response]:
         try:
             database.session.add(new_user)
             database.session.commit()
-            return redirect(url_for("index"))
+            return redirect(url_for("login"))
         except IntegrityError:
             database.session.rollback()
             flash('There is already user with such email!', 'warning')

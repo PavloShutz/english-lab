@@ -4,8 +4,17 @@ import secrets
 
 from flask import Flask
 
-from .instances import database, login_manager, migrate, bootstrap5, csrf
 from .auth import index, auth
+from .account import account
+from .constants import ADMINS
+from .instances import (
+    database,
+    login_manager,
+    migrate,
+    bootstrap5,
+    csrf
+)
+from .edit_topic import topic_editor
 
 
 def __initialize_app(app: Flask) -> None:
@@ -21,9 +30,12 @@ def create_app():
     """Create and configure the app."""
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///english_lab.db"
+    app.config["ADMINS"] = ADMINS
     app.secret_key = secrets.token_hex(16)
     __initialize_app(app)
     app.register_blueprint(auth)
+    app.register_blueprint(account)
+    app.register_blueprint(topic_editor)
     app.add_url_rule('/', view_func=index)
 
     return app

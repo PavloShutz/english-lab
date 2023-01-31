@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     {% from 'bootstrap5/nav.html' import render_nav_item %}
-    {% from 'bootstrap5/utils.html' import render_messages, render_icon %}
+    {% from 'bootstrap5/utils.html' import render_messages %}
 
     {% block styles %}
         {{ bootstrap.load_css() }}
@@ -24,6 +24,10 @@
             </button>
             <div class="navbar-nav mr-auto" id="navbarSupportedContent">
                 {% if current_user.is_authenticated %}
+                    {% if current_user.email in config['ADMINS'] %}
+                        {{ render_nav_item('topic_editor.create_topic', 'Create new topic') }}
+                    {% endif %}
+                    {{ render_nav_item('account.profile', 'Profile', user_id=current_user.id) }}
                     {{ render_nav_item('auth.logout', 'Log Out') }}
                 {% else %}
                     {{ render_nav_item('auth.signup', 'Sign Up') }}
