@@ -6,7 +6,7 @@ from typing import Union
 from flask import Blueprint, render_template, Response
 from flask_login import login_required
 
-from .user import User
+from .models import User
 
 account = Blueprint(name="account", import_name=__name__, url_prefix='/account')
 

@@ -13,16 +13,10 @@ from .auth_logic import (
     _create_new_user
 )
 from .instances import login_manager, database
-from .user import User
+from .models import User
 from .forms import SignUpForm, LoginForm
 
 auth = Blueprint(name='auth', import_name=__name__, url_prefix='/auth')
-
-
-@auth.get('/')
-def index() -> str:
-    """Render main page."""
-    return render_template("index.html")
 
 
 @auth.route('/signup', methods=('GET', 'POST'))

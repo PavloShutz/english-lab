@@ -4,9 +4,10 @@ import secrets
 
 from flask import Flask
 
-from .auth import index, auth
+from .auth import auth
 from .account import account
 from .constants import ADMINS
+from .edit_topic import topic_editor, index
 from .instances import (
     database,
     login_manager,
@@ -14,7 +15,6 @@ from .instances import (
     bootstrap5,
     csrf
 )
-from .edit_topic import topic_editor
 
 
 def __initialize_app(app: Flask) -> None:

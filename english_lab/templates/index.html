@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
+{% from 'bootstrap5/table.html' import render_table %}
 
 {% block content %}
-<h1>Home page</h1>
+    {{ render_table(topics) }}
 {% endblock %}

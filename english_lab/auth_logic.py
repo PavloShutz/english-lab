@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash
 
 from .forms import SignUpForm
-from.user import User
+from.models import User
 
 
 def _get_data_from_sign_up_form(form: SignUpForm) -> tuple:

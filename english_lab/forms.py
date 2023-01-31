@@ -2,8 +2,15 @@
 
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, EmailField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import InputRequired, Email, EqualTo, Optional
+from wtforms import (
+    StringField,
+    EmailField,
+    PasswordField,
+    SubmitField,
+    BooleanField,
+    TextAreaField
+)
+from wtforms.validators import InputRequired, Email, EqualTo, Optional, Length
 
 
 class SignUpForm(FlaskForm):
@@ -28,3 +35,15 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", validators=[InputRequired("Please, enter your password!")])
     remember_me = BooleanField("Remember me", validators=[Optional()])
     submit = SubmitField("Sign Up")
+
+
+class NewTopicForm(FlaskForm):
+    title = StringField("Title", validators=[
+        InputRequired("Please, provide title here."),
+        Length(min=5)
+    ])
+    body = TextAreaField("Body", validators=[
+        InputRequired("Please, fill body section"),
+        Length(min=20)
+    ])
+    submit = SubmitField("Create new topic")
