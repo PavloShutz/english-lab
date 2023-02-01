@@ -15,6 +15,7 @@ from .instances import (
     bootstrap5,
     csrf
 )
+from .topic import topic_bp
 
 
 def __initialize_app(app: Flask) -> None:
@@ -30,11 +31,14 @@ def create_app():
     """Create and configure the app."""
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///english_lab.db"
+    # good themes: flatly, zephyr, lux, minty, sandstone, simplex, sketchy, yeti
+    app.config["BOOTSTRAP_BOOTSWATCH_THEME"] = 'yeti'
     app.config["ADMINS"] = ADMINS
     app.secret_key = secrets.token_hex(16)
     __initialize_app(app)
     app.register_blueprint(auth)
     app.register_blueprint(account)
+    app.register_blueprint(topic_bp)
     app.register_blueprint(topic_editor)
     app.add_url_rule('/', view_func=index)
 

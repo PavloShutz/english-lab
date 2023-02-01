@@ -32,7 +32,7 @@ def signup() -> Union[str, Response]:
         except IntegrityError:
             database.session.rollback()
             flash('There is already user with such email!', 'warning')
-    return render_template("signup.html", form=form)
+    return render_template("auth/signup.html", form=form)
 
 
 @auth.route('/login', methods=("GET", "POST"))
@@ -45,7 +45,7 @@ def login() -> Union[str, Response]:
             login_user(user, remember=form.remember_me.data)
             return redirect(url_for("index"))
         flash("Invalid email or password!", 'warning')
-    return render_template("login.html", form=form)
+    return render_template("auth/login.html", form=form)
 
 
 @auth.route("/logout")

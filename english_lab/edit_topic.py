@@ -3,7 +3,7 @@ from typing import Union
 from flask import Blueprint, render_template, redirect, url_for, Response
 from flask_login import login_required
 
-from .forms import NewTopicForm
+from .forms import NewTopicForm, ReadTopicForm
 from .instances import database
 from .models import Topic
 
@@ -11,10 +11,13 @@ topic_editor = Blueprint(name="topic_editor", import_name=__name__, url_prefix='
 
 
 @topic_editor.get('/')
-def index() -> str:
+def index() -> Union[str, Response]:
     """Render main page."""
     topics = Topic.query.all()
-    return render_template("index.html", topics=topics)
+    form = ReadTopicForm()
+    if form.validate_on_submit():
+        return redirect(url_for("topic_bp.read_topic"))
+    return render_template("home/index.html", topics=topics, form=form)
 
 
 @topic_editor.route('/create_topic', methods=("GET", "POST"))

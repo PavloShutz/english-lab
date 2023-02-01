@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/nav.html' import render_nav_item %}
+
+{% block content %}
+    {% for topic in topics %}
+        <div class="navbar navbar-expand-min navbar-light bg-light">
+            <h4>{{ topic.title }}</h4>
+            <div class="navbar-nav mr-auto">
+                {{ render_nav_item('topic.read_topic', 'Read', topic_id=topic.id) }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

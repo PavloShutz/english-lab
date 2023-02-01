@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+    <div style="margin: 0 auto;text-align: center;width: 60%;">
+        <br><h4>Log In</h4><br>
+        {{ render_form(form, button_style='success', button_size='lg', render_kw={'style': 'display: inline-block;'}) }}<br>
+    </div>
+{% endblock %}
