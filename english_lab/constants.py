@@ -1,3 +1,6 @@
+"""Global constants for the application."""
+
+
 import os
 from dotenv import load_dotenv, find_dotenv
 import json

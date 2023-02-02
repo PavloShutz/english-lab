@@ -16,13 +16,13 @@ class SignUpForm(FlaskForm):
     """Form to sign up new user."""
     name = StringField("🖊 Name", validators=[InputRequired("Please, enter your name!")])
     surname = StringField("🖊 Surname", validators=[InputRequired("Please, enter your surname!")])
-    email = EmailField("📧 Email", validators=[InputRequired("Please, enter your email!"), Email()])
-    password = PasswordField("🔑 Password", validators=[
+    email = EmailField("📧 Email (required)", validators=[InputRequired("Please, enter your email!"), Email()])
+    password = PasswordField("🔑 Password (required)", validators=[
         InputRequired("Please, enter password!"),
         EqualTo("confirm_password", message="Passwords must match")
     ])
     confirm_password = PasswordField(
-        "🔐 Confirm password",
+        "🔐 Confirm password (required)",
         validators=[InputRequired("Please, confirm your password!")]
     )
     submit = SubmitField("Sign Up")
@@ -30,8 +30,8 @@ class SignUpForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     """Login form for signed-up users."""
-    email = EmailField("📧 Email", validators=[InputRequired("Please, enter your email!"), Email()])
-    password = PasswordField("🔑 Password", validators=[InputRequired("Please, enter your password!")])
+    email = EmailField("📧 Email (required)", validators=[InputRequired("Please, enter your email!"), Email()])
+    password = PasswordField("🔑 Password (required)", validators=[InputRequired("Please, enter your password!")])
     remember_me = SwitchField(
         "Remember me",
         validators=[
@@ -41,6 +41,7 @@ class LoginForm(FlaskForm):
 
 
 class NewTopicForm(FlaskForm):
+    """Form for creating new topics."""
     title = StringField("📝 Title", validators=[
         InputRequired("Please, provide title here."),
         Length(min=5)
@@ -52,7 +53,3 @@ class NewTopicForm(FlaskForm):
                          ],
                          render_kw={'style': 'height: 360px;'})
     submit = SubmitField("Create new topic")
-
-
-class ReadTopicForm(FlaskForm):
-    read = SubmitField("Read")

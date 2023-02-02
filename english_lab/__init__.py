@@ -19,7 +19,9 @@ from .topic import topic_bp
 
 
 def __initialize_app(app: Flask) -> None:
-    """Initialize the application."""
+    """Initialize the application.
+    :returns: None
+    """
     database.init_app(app)
     login_manager.init_app(app)
     migrate.init_app(app, database)
@@ -27,19 +29,26 @@ def __initialize_app(app: Flask) -> None:
     csrf.init_app(app)
 
 
-def create_app():
-    """Create and configure the app."""
+def __register_blueprints(app: Flask, *blueprints) -> None:
+    """Register all the application blueprints.
+    :returns: None
+    """
+    for blueprint in blueprints:
+        app.register_blueprint(blueprint)
+
+
+def create_app() -> Flask:
+    """Create and configure the app.
+    :returns: Flask object
+    """
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///english_lab.db"
-    # good themes: flatly, zephyr, lux, minty, sandstone, simplex, sketchy, yeti
-    app.config["BOOTSTRAP_BOOTSWATCH_THEME"] = 'yeti'
+    # good themes: flatly, zephyr, lux, minty, sandstone, simplex, sketchy, yeti, united
+    app.config["BOOTSTRAP_BOOTSWATCH_THEME"] = 'cosmo'
     app.config["ADMINS"] = ADMINS
     app.secret_key = secrets.token_hex(16)
     __initialize_app(app)
-    app.register_blueprint(auth)
-    app.register_blueprint(account)
-    app.register_blueprint(topic_bp)
-    app.register_blueprint(topic_editor)
+    __register_blueprints(app, auth, account, topic_bp, topic_editor)
     app.add_url_rule('/', view_func=index)
 
     return app

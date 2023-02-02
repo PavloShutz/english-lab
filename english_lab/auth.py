@@ -21,7 +21,9 @@ auth = Blueprint(name='auth', import_name=__name__, url_prefix='/auth')
 
 @auth.route('/signup', methods=('GET', 'POST'))
 def signup() -> Union[str, Response]:
-    """Sign up new user."""
+    """Sign up new user.
+    :returns: rendered template or response
+    """
     form = SignUpForm()
     if form.validate_on_submit():
         new_user = _create_new_user(*_get_data_from_sign_up_form(form))
@@ -37,7 +39,9 @@ def signup() -> Union[str, Response]:
 
 @auth.route('/login', methods=("GET", "POST"))
 def login() -> Union[str, Response]:
-    """Login existing user."""
+    """Login existing user.
+    :returns: rendered template or response
+    """
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -51,12 +55,16 @@ def login() -> Union[str, Response]:
 @auth.route("/logout")
 @login_required
 def logout() -> Response:
-    """Logout existing user."""
+    """Logout existing user.
+    :returns: response
+    """
     logout_user()
     return redirect(url_for("index"))
 
 
 @login_manager.user_loader
 def load_user(user_id) -> User:
-    """Load user by user's id."""
+    """Load user by user's id.
+    :returns: user
+    """
     return User.query.get(user_id)

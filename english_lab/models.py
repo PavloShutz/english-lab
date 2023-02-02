@@ -1,3 +1,6 @@
+"""All models for SQLAlchemy database tool."""
+
+
 from flask_login import UserMixin
 
 from .instances import database
@@ -13,7 +16,13 @@ class User(UserMixin, database.Model):
     email = database.Column(database.String(255), nullable=False, unique=True)
     password = database.Column(database.String(255), nullable=False)
 
-    def __init__(self, name, surname, email, password):
+    def __init__(
+            self,
+            name: str,
+            surname: str,
+            email: str,
+            password: str
+    ):
         self.name = name
         self.surname = surname
         self.email = email
@@ -22,6 +31,7 @@ class User(UserMixin, database.Model):
 
 class Topic(database.Model):
     """Topic that can be created by admin."""
+
     __tablename__ = 'topics'
     id = database.Column(database.Integer, primary_key=True)
     title = database.Column(database.String(255), nullable=False)

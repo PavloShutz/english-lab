@@ -1,13 +1,37 @@
 {% extends 'base.html' %}
 {% from 'bootstrap5/nav.html' import render_nav_item %}
+{% from 'bootstrap5/utils.html' import render_icon %}
 
 {% block content %}
-    {% for topic in topics %}
-        <div class="navbar navbar-expand-min navbar-light bg-light">
-            <h4>{{ topic.title }}</h4>
-            <div class="navbar-nav mr-auto">
-                {{ render_nav_item('topic.read_topic', 'Read', topic_id=topic.id) }}
+        <div class="container" style="display: flex;">
+            <div class="topics"><br><br><br><br>
+                {% for topic in topics %}
+                    <div style="width: 700px;left: 5%;" class="navbar navbar-expand-min navbar-light bg-success p-2 text-white bg-opacity-75">
+                        <h4>{{ topic.title }}</h4>
+                        <div style="width: 150px;" class="navbar-nav mr-end">
+                            {% if current_user.is_authenticated %}
+                                <button class="btn btn-warning">{{ render_nav_item('topic.read_topic', 'Read', topic_id=topic.id) }} {{ render_icon('unlock-fill', color='dark', desc='Unlock') }}</button>
+                            {% else %}
+                                <button disabled class="btn btn-warning">{{ render_nav_item('topic.read_topic', 'Read', topic_id=topic.id) }} {{ render_icon('lock-fill', color='dark', desc='Lock') }}</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                <br><br>
+                {% endfor %}
+            </div>
+            <div class="additional-section">
+                <div style="left: 250px;top: 100px;" class="navbar navbar-expand-min navbar-light p-2 text-white bg-opacity-75">
+                    <div class="navbar-nav mr-auto" style="display: flex;">
+                        <div>
+                            {{ render_nav_item('topic_editor.index', "Check out our telegram", _use_li=True) }}
+                            {{ render_icon('telegram', color='info', desc='Telegram') }}
+                        </div>
+                        <div>
+                            {{ render_nav_item('topic_editor.index', "Report a bug", _use_li=True) }}
+                            {{ render_icon('bug-fill', color='success', desc='Bug') }}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    {% endfor %}
 {% endblock %}
