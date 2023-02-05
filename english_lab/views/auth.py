@@ -8,13 +8,15 @@ from flask_login import login_user, login_required, logout_user
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash
 
-from .auth_logic import (
-    _get_data_from_sign_up_form,
-    _create_new_user
-)
-from .instances import login_manager, database
-from .models import User
-from .forms import SignUpForm, LoginForm
+from english_lab.services.auth_logic import create_new_user
+from english_lab.instances import login_manager, database
+from english_lab.models import User
+from english_lab.forms import SignUpForm, LoginForm
+from english_lab.services.db import add_new_object_to_db
+
+
+__all__ = ["auth"]
+
 
 auth = Blueprint(name='auth', import_name=__name__, url_prefix='/auth')
 
@@ -26,11 +28,10 @@ def signup() -> Union[str, Response]:
     """
     form = SignUpForm()
     if form.validate_on_submit():
-        new_user = _create_new_user(*_get_data_from_sign_up_form(form))
+        new_user = create_new_user(form)
         try:
-            database.session.add(new_user)
-            database.session.commit()
-            return redirect(url_for("login"))
+            add_new_object_to_db(new_user)
+            return redirect(url_for("auth.login"))
         except IntegrityError:
             database.session.rollback()
             flash('There is already user with such email!', 'warning')
@@ -47,7 +48,7 @@ def login() -> Union[str, Response]:
         user = User.query.filter_by(email=form.email.data).first()
         if user and check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember_me.data)
-            return redirect(url_for("index"))
+            return redirect(url_for("home.index"))
         flash("Invalid email or password!", 'warning')
     return render_template("auth/login.html", form=form)
 
@@ -59,7 +60,7 @@ def logout() -> Response:
     :returns: response
     """
     logout_user()
-    return redirect(url_for("index"))
+    return redirect(url_for("home.index"))
 
 
 @login_manager.user_loader

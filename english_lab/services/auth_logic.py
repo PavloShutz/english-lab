@@ -3,8 +3,8 @@
 
 from werkzeug.security import generate_password_hash
 
-from .forms import SignUpForm
-from.models import User
+from english_lab.forms import SignUpForm
+from english_lab.models import User
 
 
 def _get_data_from_sign_up_form(form: SignUpForm) -> tuple:
@@ -19,7 +19,7 @@ def _get_data_from_sign_up_form(form: SignUpForm) -> tuple:
     return name, surname, email, password
 
 
-def _create_new_user(name: str, surname: str, email: str, password: str) -> User:
+def _create_new_user_object(name: str, surname: str, email: str, password: str) -> User:
     """Create new user to add to database."""
     return User(
         name=name,
@@ -27,3 +27,7 @@ def _create_new_user(name: str, surname: str, email: str, password: str) -> User
         email=email,
         password=generate_password_hash(password)
     )
+
+
+def create_new_user(form: SignUpForm):
+    return _create_new_user_object(*_get_data_from_sign_up_form(form))

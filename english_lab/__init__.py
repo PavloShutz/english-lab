@@ -4,10 +4,7 @@ import secrets
 
 from flask import Flask
 
-from .auth import auth
-from .account import account
-from .constants import ADMINS
-from .edit_topic import topic_editor, index
+
 from .instances import (
     database,
     login_manager,
@@ -15,7 +12,14 @@ from .instances import (
     bootstrap5,
     csrf
 )
-from .topic import topic_bp
+from .services.constants import ADMINS
+from .views import (
+    auth,
+    account,
+    topic_bp,
+    topic_editor,
+    home
+)
 
 
 def __initialize_app(app: Flask) -> None:
@@ -48,7 +52,6 @@ def create_app() -> Flask:
     app.config["ADMINS"] = ADMINS
     app.secret_key = secrets.token_hex(16)
     __initialize_app(app)
-    __register_blueprints(app, auth, account, topic_bp, topic_editor)
-    app.add_url_rule('/', view_func=index)
+    __register_blueprints(app, auth, account, topic_bp, topic_editor, home)
 
     return app

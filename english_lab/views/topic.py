@@ -1,12 +1,14 @@
 """Routes for accessing topic reading."""
 
 
-from typing import Union
-
-from flask import Blueprint, render_template, Response
+from flask import Blueprint, render_template
 from flask_login import login_required
 
-from .models import Topic
+from english_lab.models import Topic
+
+
+__all__ = ["topic_bp"]
+
 
 topic_bp = Blueprint(name="topic", import_name=__name__, url_prefix='/topic')
 
