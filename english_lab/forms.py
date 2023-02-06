@@ -53,3 +53,7 @@ class NewTopicForm(FlaskForm):
                          ],
                          render_kw={'style': 'height: 360px;'})
     submit = SubmitField("Create new topic")
+
+
+class TopicEditForm(FlaskForm):
+    pass

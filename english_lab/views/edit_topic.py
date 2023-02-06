@@ -15,13 +15,6 @@ __all__ = ["topic_editor"]
 topic_editor = Blueprint(name="topic_editor", import_name=__name__, url_prefix='/topic_editor')
 
 
-@topic_editor.get('/')
-def index() -> Union[str, Response]:
-    """Render main page."""
-    topics = Topic.query.all()
-    return render_template("home/index.html", topics=topics)
-
-
 @topic_editor.route('/create_topic', methods=("GET", "POST"))
 @login_required
 @admin_required

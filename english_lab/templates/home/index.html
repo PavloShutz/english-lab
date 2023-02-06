@@ -11,6 +11,9 @@
                         <div style="width: 150px;" class="navbar-nav mr-end">
                             {% if current_user.is_authenticated %}
                                 <button class="btn btn-warning">{{ render_nav_item('topic.read_topic', 'Read', topic_id=topic.id) }} {{ render_icon('unlock-fill', color='dark', desc='Unlock') }}</button>
+                                {% if current_user.email in config['ADMINS'] %}
+                                    <button class="btn btn-secondary"><a href="#">Edit topic</a></button>
+                                {% endif %}
                             {% else %}
                                 <button disabled class="btn btn-warning">{{ render_nav_item('topic.read_topic', 'Read', topic_id=topic.id) }} {{ render_icon('lock-fill', color='dark', desc='Lock') }}</button>
                             {% endif %}
