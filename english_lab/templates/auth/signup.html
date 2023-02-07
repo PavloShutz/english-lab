@@ -2,7 +2,11 @@
 {% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
-    <div style="margin: 0 auto;text-align: center;width: 60%;">
+<div class="signup-form" style="margin: 0 auto;text-align: center;width: 100%;display: flex;">
+    <div class="photo">
+        <img src="https://img.freepik.com/vetores-gratis/ilustracao-do-conceito-abstrato-da-pagina-de-login_335657-3875.jpg">
+    </div>
+    <div style="margin: 0 auto;text-align: center;">
         <h4>Sign Up</h4><br>
         {{ render_form(
             form,
@@ -11,4 +15,5 @@
             render_kw={'style': 'display: inline-block;'})
         }}
     </div>
+</div>
 {% endblock %}

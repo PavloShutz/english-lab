@@ -25,7 +25,7 @@ def create_topic() -> Union[str, Response]:
         new_topic = Topic(title=form.title.data, body=form.body.data)
         database.session.add(new_topic)
         database.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for('home.index'))
     return render_template("topic_editor/create_topic.html", form=form)
 
 
