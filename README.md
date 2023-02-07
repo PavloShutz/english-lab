@@ -1,4 +1,6 @@
-# english-lab
+<p align="center">
+    <img src='https://raw.githubusercontent.com/PavloShutz/english-lab/main/english_lab/static/English%20Lab.png' width="250">
+</p>
 
 ## 1. Ціль проекту
 
