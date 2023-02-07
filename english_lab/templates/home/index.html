@@ -8,14 +8,18 @@
                 {% for topic in topics %}
                     <div style="width: 700px;left: 5%;" class="navbar navbar-expand-min navbar-light bg-success p-2 text-white bg-opacity-75">
                         <h4>{{ topic.title }}</h4>
-                        <div style="width: 150px;" class="navbar-nav mr-end">
+                        <div class="navbar-nav mr-end">
                             {% if current_user.is_authenticated %}
-                                <button class="btn btn-warning">{{ render_nav_item('topic.read_topic', 'Read', topic_id=topic.id) }} {{ render_icon('unlock-fill', color='dark', desc='Unlock') }}</button>
-                                {% if current_user.email in config['ADMINS'] %}
-                                    <button class="btn btn-secondary"><a href="#">Edit topic</a></button>
-                                {% endif %}
+                                <div style="display: flex;width: 200px;">
+                                    {% if current_user.email in config['ADMINS'] %}
+                                        <button style="width: 90%;margin-right: 8px;" class="btn btn-primary">{{ render_nav_item('topic_editor.edit_topic', 'Edit', topic_id=topic.id) }} {{ render_icon('pencil-fill', color='dark', desc='Pen') }}</button>
+                                    {% endif %}
+                                    <button style="width: 90%;" class="btn btn-warning">{{ render_nav_item('topic.read_topic', 'Read', topic_id=topic.id) }} {{ render_icon('unlock-fill', color='dark', desc='Unlock') }}</button>
+                                </div>
                             {% else %}
-                                <button disabled class="btn btn-warning">{{ render_nav_item('topic.read_topic', 'Read', topic_id=topic.id) }} {{ render_icon('lock-fill', color='dark', desc='Lock') }}</button>
+                            <div style="display: flexbox;width: 150px;">
+                                <button disabled style="width: 100%;" class="btn btn-warning">{{ render_nav_item('topic.read_topic', 'Read', topic_id=topic.id) }} {{ render_icon('lock-fill', color='dark', desc='Lock') }}</button>
+                            </div>
                             {% endif %}
                         </div>
                     </div>
@@ -26,11 +30,11 @@
                 <div style="left: 250px;top: 100px;" class="navbar navbar-expand-min navbar-light p-2 text-white bg-opacity-75">
                     <div class="navbar-nav mr-auto" style="display: flex;">
                         <div>
-                            {{ render_nav_item('topic_editor.index', "Check out our telegram", _use_li=True) }}
+                            {{ render_nav_item('home.index', "Check out our telegram", _use_li=True) }}
                             {{ render_icon('telegram', color='info', desc='Telegram') }}
                         </div>
                         <div>
-                            {{ render_nav_item('topic_editor.index', "Report a bug", _use_li=True) }}
+                            {{ render_nav_item('home.index', "Report a bug", _use_li=True) }}
                             {{ render_icon('bug-fill', color='success', desc='Bug') }}
                         </div>
                     </div>

@@ -56,4 +56,16 @@ class NewTopicForm(FlaskForm):
 
 
 class TopicEditForm(FlaskForm):
-    pass
+    """Form for editing existing topic."""
+    title = StringField("📝 Title", validators=[
+        InputRequired("Please, provide title here."),
+        Length(min=5)
+    ])
+    body = TextAreaField("✏ Body",
+                         validators=[
+                             InputRequired("Please, fill body section"),
+                             Length(min=20)
+                         ],
+                         render_kw={'style': 'height: 360px;'})
+    submit = SubmitField("Save changes")
+    delete = SubmitField("🗑", render_kw={'class': 'btn-danger'})
