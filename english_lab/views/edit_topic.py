@@ -1,9 +1,10 @@
-from datetime import date
+"""Describing views for editing topics."""
+
+
 from typing import Union
 
 from flask import Blueprint, render_template, redirect, url_for, Response
 from flask_login import login_required
-import requests
 
 from english_lab.forms import NewTopicForm, TopicEditForm
 from english_lab.instances import database
@@ -11,17 +12,13 @@ from english_lab.models import Topic
 from english_lab.services.admin import admin_required
 from english_lab.services.db import get_topic
 from english_lab.services.constants import CHAT_ID, TOKEN
+from english_lab.services.bot import send_notification_about_new_topic
 
 
 __all__ = ["topic_editor"]
 
 
 topic_editor = Blueprint(name="topic_editor", import_name=__name__, url_prefix='/topic_editor')
-
-
-def send_message(message):
-    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={CHAT_ID}&text={message}"
-    requests.post(url)
 
 
 @topic_editor.route('/create_topic', methods=("GET", "POST"))
@@ -33,19 +30,7 @@ def create_topic() -> Union[str, Response]:
         new_topic = Topic(title=form.title.data, body=form.body.data)
         database.session.add(new_topic)
         database.session.commit()
-        send_message(
-            f"""
-📢 NEW TOPIC IS HERE!
-
-{new_topic.title}
-
-📆 Added: {date.today()}
-
-🔎 Check it on our web-site:
-
-{f'http://127.0.0.1:5000/{url_for("topic.read_topic", topic_id=new_topic.id)}'}
-            """
-        )
+        send_notification_about_new_topic(TOKEN, CHAT_ID, new_topic)
         return redirect(url_for('home.index'))
     return render_template("topic_editor/create_topic.html", form=form)
 
