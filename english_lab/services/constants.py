@@ -8,3 +8,5 @@ import json
 load_dotenv(find_dotenv())
 
 ADMINS = json.loads(os.environ.get("ADMINS"))
+CHAT_ID = os.getenv("CHAT_ID")
+TOKEN = os.getenv("TOKEN")
