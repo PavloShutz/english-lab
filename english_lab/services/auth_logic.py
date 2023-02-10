@@ -29,5 +29,6 @@ def _create_new_user_object(name: str, surname: str, email: str, password: str) 
     )
 
 
-def create_new_user(form: SignUpForm):
+def create_new_user(form: SignUpForm) -> User:
+    """Create new object based on sign up form's data."""
     return _create_new_user_object(*_get_data_from_sign_up_form(form))

@@ -25,6 +25,7 @@ topic_editor = Blueprint(name="topic_editor", import_name=__name__, url_prefix='
 @login_required
 @admin_required
 def create_topic() -> Union[str, Response]:
+    """View for creating new topic."""
     form = NewTopicForm()
     if form.validate_on_submit():
         new_topic = Topic(title=form.title.data, body=form.body.data)
@@ -39,6 +40,7 @@ def create_topic() -> Union[str, Response]:
 @login_required
 @admin_required
 def edit_topic(topic_id):
+    """View for editing or deleting existing topic."""
     topic = get_topic(topic_id)
     form = TopicEditForm(title=topic.title, body=topic.body)
     if form.validate_on_submit():

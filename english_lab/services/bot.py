@@ -14,6 +14,7 @@ def _send_message(token: str, chat_id: int, message: str) -> None:
 
 
 def send_notification_about_new_topic(token: str, chat_id: int, new_topic: Topic):
+    """Send notification about new topic created by admin."""
     _send_message(token, chat_id, f"""
 📢 NEW TOPIC IS HERE!
 
