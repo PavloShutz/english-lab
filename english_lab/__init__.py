@@ -19,7 +19,6 @@ from .views import (
     topic_bp,
     topic_editor,
     home,
-    report
 )
 
 
@@ -53,6 +52,6 @@ def create_app() -> Flask:
     app.config["ADMINS"] = ADMINS
     app.secret_key = secrets.token_hex(16)
     __initialize_app(app)
-    __register_blueprints(app, auth, account, topic_bp, topic_editor, home, report)
+    __register_blueprints(app, auth, account, topic_bp, topic_editor, home)
 
     return app
