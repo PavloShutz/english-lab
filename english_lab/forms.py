@@ -69,3 +69,9 @@ class TopicEditForm(FlaskForm):
                          render_kw={'style': 'height: 360px;'})
     submit = SubmitField("Save changes")
     delete = SubmitField("🗑", render_kw={'class': 'btn-danger'})
+
+
+class BugReportForm(FlaskForm):
+    title = StringField("Problem", validators=[InputRequired()])
+    body = TextAreaField("Describe this problem", validators=[InputRequired(), Length(min=15)])
+    report = SubmitField("Report")
