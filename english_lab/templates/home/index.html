@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% from 'bootstrap5/nav.html' import render_nav_item %}
 {% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'bootstrap5/pagination.html' import render_pagination %}
 
 {% block content %}
 {% set telegram = "{{ render_icon('telegram', color='info', desc='Telegram') }}" %}
 <div class="container" style="display: flex;">
     <div class="topics"><br><br><br><br>
-        {% for topic in topics %}
+        {% for topic in topics.items %}
             <div style="width: 700px;left: 5%;" class="navbar navbar-expand-min navbar-dark bg-success p-2 bg-opacity-50">
                 <h4>{{ topic.title }}</h4>
                 <div class="navbar-nav mr-end">
@@ -26,6 +27,7 @@
             </div>
         <br><br>
         {% endfor %}
+        {{ render_pagination(topics, align='center') }}
     </div>
     <div class="additional-section">
         <div style="left: 250px;top: 100px;" class="navbar navbar-expand-min navbar-light p-2 text-white bg-opacity-75">

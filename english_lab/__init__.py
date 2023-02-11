@@ -48,7 +48,7 @@ def create_app() -> Flask:
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///english_lab.db"
     # good themes: flatly, zephyr, lux, minty, sandstone, simplex, sketchy, yeti, united
-    app.config["BOOTSTRAP_BOOTSWATCH_THEME"] = 'united'
+    app.config["BOOTSTRAP_BOOTSWATCH_THEME"] = 'minty'
     app.config["ADMINS"] = ADMINS
     app.secret_key = secrets.token_hex(16)
     __initialize_app(app)
