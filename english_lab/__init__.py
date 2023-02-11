@@ -18,7 +18,8 @@ from .views import (
     account,
     topic_bp,
     topic_editor,
-    home
+    home,
+    report
 )
 
 
@@ -48,10 +49,10 @@ def create_app() -> Flask:
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///english_lab.db"
     # good themes: flatly, zephyr, lux, minty, sandstone, simplex, sketchy, yeti, united
-    app.config["BOOTSTRAP_BOOTSWATCH_THEME"] = 'zephyr'
+    app.config["BOOTSTRAP_BOOTSWATCH_THEME"] = 'united'
     app.config["ADMINS"] = ADMINS
     app.secret_key = secrets.token_hex(16)
     __initialize_app(app)
-    __register_blueprints(app, auth, account, topic_bp, topic_editor, home)
+    __register_blueprints(app, auth, account, topic_bp, topic_editor, home, report)
 
     return app
