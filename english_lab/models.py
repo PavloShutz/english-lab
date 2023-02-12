@@ -37,6 +37,7 @@ class Topic(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     title = database.Column(database.String(255), nullable=False)
     body = database.Column(database.Text, nullable=False)
+    questions = relationship("Question", cascade="all, delete")
 
     def __init__(self, title: str, body: str):
         self.title = title
@@ -49,6 +50,7 @@ class Question(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     body = database.Column(database.String(255), nullable=False)
     answers = relationship("Answer", cascade="all, delete")
+    topic_id = database.Column(database.Integer, database.ForeignKey("topics.id"))
 
 
 class Answer(database.Model):
