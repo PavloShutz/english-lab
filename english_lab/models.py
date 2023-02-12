@@ -2,6 +2,7 @@
 
 
 from flask_login import UserMixin
+from sqlalchemy.orm import relationship
 
 from .instances import database
 
@@ -40,3 +41,19 @@ class Topic(database.Model):
     def __init__(self, title: str, body: str):
         self.title = title
         self.body = body
+
+
+class Question(database.Model):
+    """Question to the topic"""
+    __tablename__ = 'questions'
+    id = database.Column(database.Integer, primary_key=True)
+    body = database.Column(database.String(255), nullable=False)
+    answers = relationship("Answer", cascade="all, delete")
+
+
+class Answer(database.Model):
+    """Answers to the question."""
+    __tablename__ = 'answers'
+    id = database.Column(database.Integer, primary_key=True)
+    body = database.Column(database.Text, nullable=False)
+    question_id = database.Column(database.Integer, database.ForeignKey("questions.id"))
