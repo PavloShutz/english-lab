@@ -7,7 +7,8 @@ from wtforms import (
     EmailField,
     PasswordField,
     SubmitField,
-    TextAreaField
+    TextAreaField,
+    FieldList
 )
 from wtforms.validators import InputRequired, Email, EqualTo, Optional, Length
 
@@ -75,3 +76,9 @@ class BugReportForm(FlaskForm):
     title = StringField("Problem", validators=[InputRequired()])
     body = TextAreaField("Describe this problem", validators=[InputRequired(), Length(min=15)])
     report = SubmitField("Report")
+
+
+class QuestionForTopicForm(FlaskForm):
+    title = StringField("Question", validators=[InputRequired()])
+    answer = StringField("Answer", validators=[InputRequired()])
+    submit = SubmitField()

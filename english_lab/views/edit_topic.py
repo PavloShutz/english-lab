@@ -6,7 +6,7 @@ from typing import Union
 from flask import Blueprint, render_template, redirect, url_for, Response
 from flask_login import login_required
 
-from english_lab.forms import NewTopicForm, TopicEditForm
+from english_lab.forms import NewTopicForm, TopicEditForm, QuestionForTopicForm
 from english_lab.instances import database
 from english_lab.models import Topic
 from english_lab.services.admin import admin_required
@@ -56,3 +56,11 @@ def edit_topic(topic_id):
             database.session.commit()
             return redirect(url_for("home.index"))
     return render_template("topic_editor/edit_topic.html", topic=topic, form=form)
+
+
+@topic_editor.route("/add_question/<int:topic_id>", methods=("GET", "POST"))
+@login_required
+@admin_required
+def add_question_for_topic(topic_id):
+    form = QuestionForTopicForm()
+    return render_template("topic_editor/add_question.html", form=form)
