@@ -49,13 +49,5 @@ class Question(database.Model):
     __tablename__ = 'questions'
     id = database.Column(database.Integer, primary_key=True)
     body = database.Column(database.String(255), nullable=False)
-    answers = relationship("Answer", cascade="all, delete")
+    answer = database.Column(database.String(255), nullable=False)
     topic_id = database.Column(database.Integer, database.ForeignKey("topics.id"))
-
-
-class Answer(database.Model):
-    """Answers to the question."""
-    __tablename__ = 'answers'
-    id = database.Column(database.Integer, primary_key=True)
-    body = database.Column(database.Text, nullable=False)
-    question_id = database.Column(database.Integer, database.ForeignKey("questions.id"))
