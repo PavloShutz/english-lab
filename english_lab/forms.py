@@ -79,6 +79,6 @@ class BugReportForm(FlaskForm):
 
 
 class QuestionForTopicForm(FlaskForm):
-    title = StringField("Question", validators=[InputRequired()])
+    body = StringField("Question", validators=[InputRequired()])
     answer = StringField("Answer", validators=[InputRequired()])
     submit = SubmitField()

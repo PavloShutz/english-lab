@@ -23,7 +23,7 @@ class User(UserMixin, database.Model):
             surname: str,
             email: str,
             password: str
-    ):
+    ) -> None:
         self.name = name
         self.surname = surname
         self.email = email
@@ -39,7 +39,7 @@ class Topic(database.Model):
     body = database.Column(database.Text, nullable=False)
     questions = relationship("Question", cascade="all, delete")
 
-    def __init__(self, title: str, body: str):
+    def __init__(self, title: str, body: str) -> None:
         self.title = title
         self.body = body
 
@@ -51,3 +51,8 @@ class Question(database.Model):
     body = database.Column(database.String(255), nullable=False)
     answer = database.Column(database.String(255), nullable=False)
     topic_id = database.Column(database.Integer, database.ForeignKey("topics.id"))
+
+    def __init__(self, body: str, answer: str, topic_id: int) -> None:
+        self.body = body
+        self.answer = answer
+        self.topic_id = topic_id
