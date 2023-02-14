@@ -47,14 +47,13 @@ def edit_topic(topic_id):
         if form.delete.data:
             database.session.query(Topic).filter(Topic.id == topic_id).delete(synchronize_session=False)
             database.session.commit()
-            return redirect(url_for("home.index"))
         elif form.submit.data:
             database.session.query(Topic).filter(Topic.id == topic_id).update(
                 {Topic.title: form.title.data, Topic.body: form.body.data},
                 synchronize_session=False
             )
             database.session.commit()
-            return redirect(url_for("home.index"))
+        return redirect(url_for("home.index"))
     return render_template("topic_editor/edit_topic.html", topic=topic, form=form)
 
 
