@@ -1,6 +1,7 @@
 """Initializing application factory."""
 
 import secrets
+from datetime import timedelta
 
 from flask import Flask
 
@@ -46,11 +47,12 @@ def create_app() -> Flask:
     :returns: Flask object
     """
     app = Flask(__name__)
+    app.config["SECRET_KEY"] = secrets.token_hex(16)
+    app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=1)
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///english_lab.db"
     # good themes: flatly, zephyr, minty, sandstone, simplex, sketchy, yeti, united
-    app.config["BOOTSTRAP_BOOTSWATCH_THEME"] = 'yeti'
+    app.config["BOOTSTRAP_BOOTSWATCH_THEME"] = 'sandstone'
     app.config["ADMINS"] = ADMINS
-    app.secret_key = secrets.token_hex(16)
     __initialize_app(app)
     __register_blueprints(app, auth, account, topic_bp, topic_editor, home)
 

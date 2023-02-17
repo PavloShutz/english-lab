@@ -3,7 +3,7 @@
 
 from typing import Union
 
-from flask import Blueprint, render_template, flash, redirect, url_for, Response
+from flask import Blueprint, render_template, flash, redirect, url_for, Response, session
 from flask_login import login_user, login_required, logout_user
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash
@@ -48,6 +48,7 @@ def login() -> Union[str, Response]:
         user = User.query.filter_by(email=form.email.data).first()
         if user and check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember_me.data)
+            session.permanent = True
             return redirect(url_for("home.index"))
         flash("Invalid email or password!", 'warning')
     return render_template("auth/login.html", form=form)
