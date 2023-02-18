@@ -8,9 +8,9 @@ from flask_login import login_required
 
 from english_lab.forms import NewTopicForm, TopicEditForm, QuestionForTopicForm
 from english_lab.instances import database
-from english_lab.models import Topic
+from english_lab.models import Topic, Question
 from english_lab.services.admin import admin_required
-from english_lab.services.db import get_topic
+from english_lab.services.db import get_topic, add_new_object_to_db
 from english_lab.services.constants import CHAT_ID, TOKEN
 from english_lab.services.bot import send_notification_about_new_topic
 
@@ -29,8 +29,7 @@ def create_topic() -> Union[str, Response]:
     form = NewTopicForm()
     if form.validate_on_submit():
         new_topic = Topic(title=form.title.data, body=form.body.data)
-        database.session.add(new_topic)
-        database.session.commit()
+        add_new_object_to_db(new_topic)
         send_notification_about_new_topic(TOKEN, CHAT_ID, new_topic)
         return redirect(url_for('home.index'))
     return render_template("topic_editor/create_topic.html", form=form)
@@ -47,6 +46,8 @@ def edit_topic(topic_id):
         if form.delete.data:
             database.session.query(Topic).filter(Topic.id == topic_id).delete(synchronize_session=False)
             database.session.commit()
+        elif form.new_question.data:
+            return redirect(url_for("topic_editor.add_question_for_topic", topic_id=topic_id))
         elif form.submit.data:
             database.session.query(Topic).filter(Topic.id == topic_id).update(
                 {Topic.title: form.title.data, Topic.body: form.body.data},
@@ -60,6 +61,14 @@ def edit_topic(topic_id):
 @topic_editor.route("/add_question/<int:topic_id>", methods=("GET", "POST"))
 @login_required
 @admin_required
-def add_question_for_topic(topic_id):
+def add_question_for_topic(topic_id) -> Union[str, Response]:
     form = QuestionForTopicForm()
+    if form.validate_on_submit():
+        question = Question(
+            body=form.body.data,
+            answer=form.answer.data,
+            topic_id=topic_id
+        )
+        add_new_object_to_db(question)
+        return redirect(url_for("topic_editor.edit_topic", topic_id=topic_id))
     return render_template("topic_editor/add_question.html", form=form)

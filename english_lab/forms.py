@@ -7,8 +7,7 @@ from wtforms import (
     EmailField,
     PasswordField,
     SubmitField,
-    TextAreaField,
-    FieldList
+    TextAreaField
 )
 from wtforms.validators import InputRequired, Email, EqualTo, Optional, Length
 
@@ -69,6 +68,7 @@ class TopicEditForm(FlaskForm):
                          ],
                          render_kw={'style': 'height: 360px;'})
     submit = SubmitField("Save changes")
+    new_question = SubmitField("Add question", render_kw={'class': 'btn-success'})
     delete = SubmitField("🗑", render_kw={'class': 'btn-danger'})
 
 
