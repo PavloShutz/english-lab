@@ -20,4 +20,4 @@ def get_topic(topic_id: int) -> Optional[Topic]:
 
 def get_question(topic_id) -> Optional[Question]:
     """Get the question by topic's id."""
-    return database.one_or_404(database.select(Question).filter_by(topic_id=topic_id))
+    return database.session.execute(database.select(Question).filter_by(topic_id=topic_id)).all()
