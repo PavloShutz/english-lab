@@ -37,7 +37,7 @@ class Topic(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     title = database.Column(database.String(255), nullable=False)
     body = database.Column(database.Text, nullable=False)
-    questions = relationship("Question", cascade="all, delete")
+    questions = relationship("Question", cascade="all, delete", backref="parent")
 
     def __init__(self, title: str, body: str) -> None:
         self.title = title
