@@ -44,6 +44,7 @@ def edit_topic(topic_id):
     form = TopicEditForm(title=topic.title, body=topic.body)
     if form.validate_on_submit():
         if form.delete.data:
+            database.session.query(Question).filter(Question.topic_id == topic_id).delete(synchronize_session=False)
             database.session.query(Topic).filter(Topic.id == topic_id).delete(synchronize_session=False)
             database.session.commit()
         elif form.new_question.data:
