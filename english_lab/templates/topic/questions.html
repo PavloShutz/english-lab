@@ -1,14 +1,42 @@
-{% extends 'base.html' %}
 
 {% block content %}
-    <div class="flip-card">
-        <div class="flip-card-inner">
-            <div class="flip-card-front">
-                <h1>{{ question.body }}</h1>
+    {% for question in topic_questions %}
+        <div class="card">
+          <div class="card-flip">
+            <div class="card-front">
+              <div class="card-body">
+                <h5 class="card-title">Question</h5>
+                <p class="card-text">{{ question[0].body }}</p>
+              </div>
             </div>
-            <div class="flip-card-back">
-                <h1>{{ question.answer }}</h1>
+            <div class="card-back">
+              <div class="card-body">
+                <h5 class="card-title">Answer</h5>
+                <p class="my-text-answer" data-text="{{ question[0].answer }}"></p>
+                <button id="show-answer" class="btn btn-danger">Show answer</button>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
+    {% endfor %}
 {% endblock %}
+
+<style>
+    .my-text-answer::before {
+        content: attr(data-text);
+        filter: blur(5px);
+    }
+
+    .my-text-answer.visible::before {
+        filter: none;
+    }
+</style>
+
+<script>
+    const showAnswerBtn = document.querySelector('#show-answer');
+    const answerText = document.querySelector('.my-text-answer');
+
+    showAnswerBtn.addEventListener('click', function() {
+        answerText.classList.toggle('visible');
+    });
+</script>
