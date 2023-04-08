@@ -52,7 +52,7 @@ def create_app() -> Flask:
     app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=1)
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///english_lab.db"
     # good themes: flatly, zephyr, minty, sandstone, simplex, sketchy, yeti, united
-    app.config["BOOTSTRAP_BOOTSWATCH_THEME"] = 'sandstone'
+    app.config["BOOTSTRAP_BOOTSWATCH_THEME"] = None
     app.config["ADMINS"] = ADMINS
     __initialize_app(app)
     __register_blueprints(app, auth, account, topic_bp, topic_editor, home)
