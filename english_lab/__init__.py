@@ -4,6 +4,7 @@ import secrets
 from datetime import timedelta
 
 from flask import Flask
+from flask import request, url_for, redirect, flash
 
 
 from .instances import (
@@ -55,5 +56,12 @@ def create_app() -> Flask:
     app.config["ADMINS"] = ADMINS
     __initialize_app(app)
     __register_blueprints(app, auth, account, topic_bp, topic_editor, home)
+
+    @app.route('/change-theme', methods=['POST'])
+    def change_theme():
+        theme = request.form['theme']
+        app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = theme
+        flash(f'Theme changed to {theme}.', 'success')
+        return redirect(url_for('home.index'))
 
     return app

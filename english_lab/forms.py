@@ -72,13 +72,11 @@ class TopicEditForm(FlaskForm):
     delete = SubmitField("🗑", render_kw={'class': 'btn-danger'})
 
 
-class BugReportForm(FlaskForm):
-    title = StringField("Problem", validators=[InputRequired()])
-    body = TextAreaField("Describe this problem", validators=[InputRequired(), Length(min=15)])
-    report = SubmitField("Report")
-
-
 class QuestionForTopicForm(FlaskForm):
     body = StringField("Question", validators=[InputRequired()])
     answer = StringField("Answer", validators=[InputRequired()])
     submit = SubmitField()
+
+
+class ChangeThemeForm(FlaskForm):
+    pass

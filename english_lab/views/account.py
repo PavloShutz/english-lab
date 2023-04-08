@@ -5,6 +5,7 @@ from flask import Blueprint, render_template
 from flask_login import login_required
 
 from english_lab.models import User
+from english_lab.forms import ChangeThemeForm
 
 
 __all__ = ["account"]
@@ -20,4 +21,5 @@ def profile(user_id) -> str:
     :returns: rendered template
     """
     user = User.query.get(user_id)
-    return render_template("account/profile.html", user=user)
+    form = ChangeThemeForm()
+    return render_template("account/profile.html", user=user, form=form)
